@@ -12,8 +12,11 @@ public class MeepleController2D : MonoBehaviour
 
     // within "10" of the unit, it starts to move
 
-    private const float kMagnitudeToStartFear = 10.0f;
+    private const float kMagnitudeToStartFear = 20.0f;
+    private const float kMagnitudeToHaveAFearJump = 10.0f;
     private const float kSecondsOfFear = 3.0f;
+    private const float kHeightOfFearMultiplier = 2.0f;
+    private const float kSteepnessOfFearRecovery = 8.0f;
 
     private float mSpeed = 5.0f;
     private float mFearTimeRemaining = 0.0f;
@@ -31,8 +34,8 @@ public class MeepleController2D : MonoBehaviour
     {
         if (mMoving)
         {
-            float fearMagnified = FearEasingRatio(mFearTimeRemaining / kSecondsOfFear) + 1.0f;
-            mFearTimeRemaining = Mathf.Max(mFearTimeRemaining - Time.deltaTime, 0.0f);
+            float fearMagnified = (FearEasingRatio(mFearTimeRemaining) * kHeightOfFearMultiplier) + 1.0f;
+            mFearTimeRemaining = Mathf.Max(mFearTimeRemaining - (Time.deltaTime / kSecondsOfFear), 0.0f);
             Vector3 translateVector = mMovementDirection * (mSpeed * Time.deltaTime * fearMagnified);
             transform.Translate(translateVector);
         }
@@ -49,20 +52,15 @@ public class MeepleController2D : MonoBehaviour
             clickToMyPos.Normalize();
 
             mMoving = true;
-            mMovementDirection = clickToMyPos;
-            mFearTimeRemaining = magnitude / kMagnitudeToStartFear * kSecondsOfFear;
+            mMovementDirection = clickToMyPos; // magnitude / kMagnitudeToStartFear
+
+            mFearTimeRemaining = magnitude < kMagnitudeToHaveAFearJump ? 0.2f : 0.0f;
         }
     }
 
     private float FearEasingRatio(float time)
     {
-        // Quad In/Out
-        const float dH = 0.5f; // Half duration
-        const float cH = 0.5f; // Half rate of change
-        time /= dH;
-        if (time < 1) return cH / 2 * time * time * time * time;
-        time -= 2;
-        return -cH / 2 * (time * time * time * time - 2);
+        return 1.0f - (1.0f / Mathf.Pow(time + 1.0f, kSteepnessOfFearRecovery));
     }
 
     // Put Trigger Code Below This Point
