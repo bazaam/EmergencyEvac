@@ -8,6 +8,8 @@ public class GlobalController
 
 	private List<MeepleController2D> mMeeples = new List<MeepleController2D>();
 
+    private bool mLastLeftClickStateWasDown = false;
+
     GlobalController()
     {
         //
@@ -15,11 +17,18 @@ public class GlobalController
 
     public void Update()
     {
-        if (UnityEngine.Input.GetMouseButton(1))
+        bool currentLeftClick = UnityEngine.Input.GetMouseButton(0);
+        if (mLastLeftClickStateWasDown != currentLeftClick)
         {
-            foreach (MeepleController2D meeple in mMeeples)
+            mLastLeftClickStateWasDown = currentLeftClick;
+
+
+            if (currentLeftClick == true)
             {
-                meeple.AlertMeeple(UnityEngine.Input.mousePosition);
+                foreach (MeepleController2D meeple in mMeeples)
+                {
+                    meeple.AlertMeeple(UnityEngine.Input.mousePosition);
+                }
             }
         }
     }

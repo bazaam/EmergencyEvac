@@ -21,7 +21,7 @@ public class MeepleController2D : MonoBehaviour {
 	void Update () {
         GlobalController.instance.Update();
 	}
-
+            
     public void AlertMeeple(Vector3 clickPosition)
     {
         offsetForDebugging *= -1;
