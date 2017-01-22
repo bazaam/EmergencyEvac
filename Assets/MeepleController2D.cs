@@ -2,25 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeepleController2D : MonoBehaviour {
+public class MeepleController2D : MonoBehaviour
+{
+    // Our Screen Limits:
+    // x: -23 to 21
+    // y: -11 to 15.5
+    // d:  51.364
 
-    private float mSpeed = 10.0f;
-    private float mFearMagnitude = 0.0f;
+
+    // within "10" of the unit, it starts to move
+
+    private const float kMagnitudeToStartFear = 10.0f;
+    private const float kSecondsOfFear = 3.0f;
+
+    private float mSpeed = 5.0f;
+    private float mFearTimeRemaining = 0.0f;
     private bool mMoving = false;
     private Vector3 mMovementDirection = new Vector3();
 
 	// Use this for initialization
-	void Start ()
+	void Start()
     {
         GlobalController.instance.RegisterMeeple(this);
     }
 	
 	// Update is run once per frame
-	void Update ()
+	void Update()
     {
         if (mMoving)
         {
-            Vector3 translateVector = mMovementDirection * (mSpeed * Time.deltaTime);
+            float fearMagnified = FearEasingRatio(mFearTimeRemaining / kSecondsOfFear);
+            mFearTimeRemaining -= Time.deltaTime;
+            Vector3 translateVector = mMovementDirection * (mSpeed * Time.deltaTime * fearMagnified);
             transform.Translate(translateVector);
         }
     }
@@ -28,10 +41,27 @@ public class MeepleController2D : MonoBehaviour {
     public void AlertMeeple(Vector3 clickPosition)
     {
         Vector3 clickToMyPos = transform.position - clickPosition;
-        mFearMagnitude = clickToMyPos.magnitude;
-        clickToMyPos.Normalize();
+        clickToMyPos.z = 0;
+        float magnitude = clickToMyPos.magnitude;
 
-        mMovementDirection = clickToMyPos;
-        mMoving = true;
+        if(magnitude < kMagnitudeToStartFear)
+        {
+            clickToMyPos.Normalize();
+
+            mMoving = true;
+            mMovementDirection = clickToMyPos;
+            mFearTimeRemaining = magnitude / kMagnitudeToStartFear * kSecondsOfFear;
+        }
+    }
+
+    private float FearEasingRatio(float time)
+    {
+        // Quad In/Out
+        const float dH = 0.5f; // Half duration
+        const float cH = 0.5f; // Half rate of change
+        time /= dH;
+        if (time < 1) return cH / 2 * time * time * time * time;
+        time -= 2;
+        return -cH / 2 * (time * time * time * time - 2);
     }
 }
