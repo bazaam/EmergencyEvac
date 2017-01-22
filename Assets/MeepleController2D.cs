@@ -69,4 +69,16 @@ public class MeepleController2D : MonoBehaviour
 
     // Put Trigger Code Below This Point
     // This Line Is Written So Obtusely That Even Git Merge Can Figure It Out
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag == "wall")
+        {
+            if (Utility.LineSegmentsIntersectPos(new Vector3(collider.bounds.center.x - collider.bounds.extents.x, collider.bounds.center.y - collider.bounds.extents.y), 
+                new Vector3(collider.bounds.center.x + collider.bounds.extents.x, collider.bounds.extents.y - collider.bounds.extents.x), 
+            
+        }
+    }
+
+   
 }
