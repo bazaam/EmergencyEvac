@@ -132,7 +132,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: df4796b594b970842b69211cb0078c5d, type: 3}
       propertyPath: m_Materials.Array.data[0]
-      value: 
+      value:
       objectReference: {fileID: 2100000, guid: dfd89f9a929ddd4489ced908084384da, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df4796b594b970842b69211cb0078c5d, type: 3}
@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea52ea50e04de3949abcd68518735dfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1001 &1632138091
 Prefab:
   m_ObjectHideFlags: 0
@@ -271,8 +271,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4be5eebc0e8a654da5d1df402402a02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   mainCam: {fileID: 1708485011}
 --- !u!4 &1632138096 stripped
 Transform:
@@ -402,8 +402,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4238524387642446, guid: ded3bc4842b79a6478eb17295e4e1de8, type: 2}
       propertyPath: m_RootOrder
-<<<<<<< HEAD
-=======
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 198121625147069974, guid: ded3bc4842b79a6478eb17295e4e1de8,
@@ -466,7 +464,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: fadddc63520db414bbc9126cbf4743ad, type: 3}
       propertyPath: m_RootOrder
->>>>>>> 269b88bc5b1263a66c257a2baf79bf1558f5e3e5
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
