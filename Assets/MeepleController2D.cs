@@ -4,27 +4,34 @@ using UnityEngine;
 
 public class MeepleController2D : MonoBehaviour {
 
-    private float offsetForDebugging = 50.0f;
+    private float mSpeed = 10.0f;
+    private float mFearMagnitude = 0.0f;
+    private bool mMoving = false;
+    private Vector3 mMovementDirection = new Vector3();
 
 	// Use this for initialization
 	void Start ()
     {
-        Invoke("RegisterThis", 1.0f);
-	}
-
-    void RegisterThis()
-    {
         GlobalController.instance.RegisterMeeple(this);
     }
 	
-	// Update is called once per frame
-	void Update () {
-        GlobalController.instance.Update();
-	}
+	// Update is run once per frame
+	void Update ()
+    {
+        if (mMoving)
+        {
+            Vector3 translateVector = mMovementDirection * (mSpeed * Time.deltaTime);
+            transform.Translate(translateVector);
+        }
+    }
             
     public void AlertMeeple(Vector3 clickPosition)
     {
-        offsetForDebugging *= -1;
-        transform.Translate(new Vector3(offsetForDebugging, offsetForDebugging, 0.0f));
+        Vector3 clickToMyPos = transform.position - clickPosition;
+        mFearMagnitude = clickToMyPos.magnitude;
+        clickToMyPos.Normalize();
+
+        mMovementDirection = clickToMyPos;
+        mMoving = true;
     }
 }

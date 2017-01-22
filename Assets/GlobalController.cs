@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GlobalController
 {
 	public static GlobalController instance = new GlobalController();
+
+    private Camera mCamera;
 
 	private List<MeepleController2D> mMeeples = new List<MeepleController2D>();
 
@@ -22,12 +25,17 @@ public class GlobalController
         {
             mLastLeftClickStateWasDown = currentLeftClick;
 
-
             if (currentLeftClick == true)
             {
-                foreach (MeepleController2D meeple in mMeeples)
+                RaycastHit hitInfo;
+                Ray ray = new Ray(mCamera.ScreenToWorldPoint(Input.mousePosition), new Vector3(0,0,1));
+                if(Physics.Raycast(ray, out hitInfo))
                 {
-                    meeple.AlertMeeple(UnityEngine.Input.mousePosition);
+                    Vector3 translatedPoint = new Vector3(hitInfo.point.x, hitInfo.point.y, 0);
+                    foreach (MeepleController2D meeple in mMeeples)
+                    {
+                        meeple.AlertMeeple(translatedPoint);
+                    }
                 }
             }
         }
@@ -36,5 +44,10 @@ public class GlobalController
     public void RegisterMeeple(MeepleController2D meeple)
     {
         mMeeples.Add(meeple);
+    }
+
+    public void RegisterCamera(Camera mainCam)
+    {
+        mCamera = mainCam;
     }
 }
