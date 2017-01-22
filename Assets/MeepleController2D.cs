@@ -70,12 +70,27 @@ public class MeepleController2D : MonoBehaviour
     // Put Trigger Code Below This Point
     // This Line Is Written So Obtusely That Even Git Merge Can Figure It Out
 
-    private void OnTriggerEnter(Collider collider)
+    private void OnTriggerEnter(Collider inCollider)
     {
-        if (collider.tag == "wall")
+        if (inCollider.tag == "wall")
         {
-            if (Utility.LineSegmentsIntersectPos(new Vector3(collider.bounds.center.x - collider.bounds.extents.x, collider.bounds.center.y - collider.bounds.extents.y), 
-                new Vector3(collider.bounds.center.x + collider.bounds.extents.x, collider.bounds.extents.y - collider.bounds.extents.x), 
+
+            Vector3 mCenter = gameObject.GetComponent<Collider>().bounds.center;
+            Vector2 mCenterV2 = new Vector2(mCenter.x, mCenter.y);
+            Vector2 mDirectionV2 = new Vector2(mMovementDirection.x, mMovementDirection.y);
+
+
+            Vector2 result = new Vector2();
+            Vector2 colliderS1 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.center.y - inCollider.bounds.extents.y);
+            Vector2 colliderS2 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.extents.y - inCollider.bounds.extents.x);
+            Vector2 colliderP1 = mCenterV2 + (mDirectionV2 * 50.0f);
+            Vector2 colliderP2 = mCenterV2 + (mDirectionV2 * -50.0f);
+
+
+            if (Utility.LineSegmentsIntersectPos(ref result, colliderS1, colliderS2, colliderP1, colliderP2))
+            {
+                //
+            } 
             
         }
     }
