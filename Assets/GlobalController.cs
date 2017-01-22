@@ -50,4 +50,5 @@ public class GlobalController
     {
         mCamera = mainCam;
     }
+
 }

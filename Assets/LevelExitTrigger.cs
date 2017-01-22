@@ -9,8 +9,9 @@ public class LevelExitTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Meeple")
-        {
-            NextLevel();
+        {   
+
+            LevelManager.instance.NextLevel();
         }
     }
     //when the meeples run into the ending they are "saved" and removed. 
