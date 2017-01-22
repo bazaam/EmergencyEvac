@@ -6103,6 +6103,10 @@ Prefab:
       propertyPath: m_Name
       value: Meeple2
       objectReference: {fileID: 0}
+    - target: {fileID: 1032507124837618, guid: 5218f5b43e4887d4dbec891a9430874f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5218f5b43e4887d4dbec891a9430874f, type: 2}
   m_IsPrefabParent: 0
