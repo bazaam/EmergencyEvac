@@ -31,8 +31,8 @@ public class MeepleController2D : MonoBehaviour
     {
         if (mMoving)
         {
-            float fearMagnified = FearEasingRatio(mFearTimeRemaining / kSecondsOfFear);
-            mFearTimeRemaining -= Time.deltaTime;
+            float fearMagnified = FearEasingRatio(mFearTimeRemaining / kSecondsOfFear) + 1.0f;
+            mFearTimeRemaining = Mathf.Max(mFearTimeRemaining - Time.deltaTime, 0.0f);
             Vector3 translateVector = mMovementDirection * (mSpeed * Time.deltaTime * fearMagnified);
             transform.Translate(translateVector);
         }
@@ -64,4 +64,7 @@ public class MeepleController2D : MonoBehaviour
         time -= 2;
         return -cH / 2 * (time * time * time * time - 2);
     }
+
+    // Put Trigger Code Below This Point
+    // This Line Is Written So Obtusely That Even Git Merge Can Figure It Out
 }
