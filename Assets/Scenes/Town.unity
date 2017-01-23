@@ -193,8 +193,8 @@ Transform:
   - {fileID: 162766889}
   - {fileID: 1659550230}
   - {fileID: 916771463}
-  - {fileID: 537834938}
   - {fileID: 2039910658}
+  - {fileID: 537834938}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -899,7 +899,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4660243440718600, guid: 45249a4ae8b57e84d8f8e958a35066b0, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -23.01
+      value: -22.98
       objectReference: {fileID: 0}
     - target: {fileID: 4660243440718600, guid: 45249a4ae8b57e84d8f8e958a35066b0, type: 2}
       propertyPath: m_LocalPosition.y
@@ -927,7 +927,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4660243440718600, guid: 45249a4ae8b57e84d8f8e958a35066b0, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1429001144318616, guid: 45249a4ae8b57e84d8f8e958a35066b0, type: 2}
       propertyPath: m_Name
