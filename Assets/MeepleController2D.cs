@@ -17,14 +17,21 @@ public class MeepleController2D : MonoBehaviour
     private const float kSecondsOfFear = 3.0f;
     private const float kHeightOfFearMultiplier = 2.0f;
     private const float kSteepnessOfFearRecovery = 8.0f;
-
+    private bool kFlipX = false;
+    private bool kFlipY = false;
     private float mSpeed = 5.0f;
     private float mFearTimeRemaining = 0.0f;
     private bool mMoving = false;
+    private bool isColliding = false;
+    private Vector3 kRotation = new Vector3();
     private Vector3 mMovementDirection = new Vector3();
+    Vector2 nearestCollision = new Vector2();
+    char currentFlip = 'x';
 
-	// Use this for initialization
-	void Start()
+
+
+    // Use this for initialization
+    void Start()
     {
         GlobalController.instance.RegisterMeeple(this);
     }
@@ -32,6 +39,22 @@ public class MeepleController2D : MonoBehaviour
 	// Update is run once per frame
 	void Update()
     {
+        if (isColliding)
+        {
+            if (currentFlip == 'x')
+            {
+                mMovementDirection.x *= -1;
+                
+            }
+            else if (currentFlip == 'y')
+            {
+                mMovementDirection.y *= -1;
+                
+            }
+
+            isColliding = false;
+        }
+
         if (mMoving)
         {
             float fearMagnified = (FearEasingRatio(mFearTimeRemaining) * kHeightOfFearMultiplier) + 1.0f;
@@ -39,6 +62,7 @@ public class MeepleController2D : MonoBehaviour
             Vector3 translateVector = mMovementDirection * (mSpeed * Time.deltaTime * fearMagnified);
             transform.Translate(translateVector);
         }
+
     }
             
     public void AlertMeeple(Vector3 clickPosition)
@@ -72,12 +96,16 @@ public class MeepleController2D : MonoBehaviour
 
     private void OnTriggerEnter(Collider inCollider)
     {
-        if (inCollider.tag == "wall")
+        if (inCollider.tag == "Wall")
         {
+
 
             Vector3 mCenter = gameObject.GetComponent<Collider>().bounds.center;
             Vector2 mCenterV2 = new Vector2(mCenter.x, mCenter.y);
             Vector2 mDirectionV2 = new Vector2(mMovementDirection.x, mMovementDirection.y);
+
+
+
 
 
             Vector2 result = new Vector2();
@@ -89,11 +117,64 @@ public class MeepleController2D : MonoBehaviour
 
             if (Utility.LineSegmentsIntersectPos(ref result, colliderS1, colliderS2, colliderP1, colliderP2))
             {
-                //
-            } 
-            
+                testCollision(result, 'y');
+            }
+
+            colliderS1 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.center.y - inCollider.bounds.extents.y);
+            colliderS2 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.extents.y + inCollider.bounds.extents.x);
+            colliderP1 = mCenterV2 + (mDirectionV2 * 50.0f);
+            colliderP2 = mCenterV2 + (mDirectionV2 * -50.0f);
+
+            if (Utility.LineSegmentsIntersectPos(ref result, colliderS1, colliderS2, colliderP1, colliderP2))
+            {
+                testCollision(result, 'x');
+            }
+
+            colliderS1 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.center.y + inCollider.bounds.extents.y);
+            colliderS2 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.extents.y + inCollider.bounds.extents.x);
+            colliderP1 = mCenterV2 + (mDirectionV2 * 50.0f);
+            colliderP2 = mCenterV2 + (mDirectionV2 * -50.0f);
+
+            if (Utility.LineSegmentsIntersectPos(ref result, colliderS1, colliderS2, colliderP1, colliderP2))
+            {
+                testCollision(result, 'y');
+            }
+
+            colliderS1 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.center.y + inCollider.bounds.extents.y);
+            colliderS2 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.extents.y - inCollider.bounds.extents.x);
+            colliderP1 = mCenterV2 + (mDirectionV2 * 50.0f);
+            colliderP2 = mCenterV2 + (mDirectionV2 * -50.0f);
+
+            if (Utility.LineSegmentsIntersectPos(ref result, colliderS1, colliderS2, colliderP1, colliderP2))
+            {
+                testCollision(result, 'x');
+            }
+
         }
+
+
+    }
+    void testCollision(Vector2 mLastCollisionPoint, char mLastFlip)
+    {
+
+        Vector3 mCenter = gameObject.GetComponent<Collider>().bounds.center;
+        Vector2 mCenterV2 = new Vector2(mCenter.x, mCenter.y);
+        Vector2 fromCenterToNearestCollision = nearestCollision - mCenterV2;
+        Vector2 fromCenterToNewCollision = mLastCollisionPoint - mCenterV2;
+        float nearestCollisionMagnitude = fromCenterToNearestCollision.magnitude;
+
+        if (!isColliding)
+        {
+            mLastCollisionPoint = nearestCollision;
+        }
+        else if (fromCenterToNewCollision.magnitude < fromCenterToNearestCollision.magnitude)
+        {
+            nearestCollision = mLastCollisionPoint;
+            currentFlip = mLastFlip;
+        }
+        isColliding = true;
+
     }
 
-   
+
 }
