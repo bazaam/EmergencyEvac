@@ -25,8 +25,7 @@ public class MeepleController2D : MonoBehaviour
     private bool isColliding = false;
     private Vector3 kRotation = new Vector3();
     private Vector3 mMovementDirection = new Vector3();
-    Vector2 nearestCollision = new Vector2();
-    char currentFlip = 'x';
+    char currentFlip = 'y';
 
 
 
@@ -53,6 +52,7 @@ public class MeepleController2D : MonoBehaviour
                 mMovementDirection.y *= -1;
                 isColliding = false;
             }
+            isColliding = false;
 
         }
 
@@ -112,9 +112,9 @@ public class MeepleController2D : MonoBehaviour
 
             Vector2 result = new Vector2();
             Vector2 colliderS1 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.center.y - inCollider.bounds.extents.y);
-            Vector2 colliderS2 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.extents.y - inCollider.bounds.extents.x);
-            Vector2 colliderS3 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.extents.y + inCollider.bounds.extents.x);
-            Vector2 colliderS4 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.extents.y + inCollider.bounds.extents.x);
+            Vector2 colliderS2 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.center.y - inCollider.bounds.extents.y);
+            Vector2 colliderS3 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.center.y + inCollider.bounds.extents.y);
+            Vector2 colliderS4 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.center.y + inCollider.bounds.extents.y);
 
             Vector2 colliderP1 = mCenterV2 + (mDirectionV2 * 50.0f);
             Vector2 colliderP2 = mCenterV2 + (mDirectionV2 * -50.0f);
@@ -148,12 +148,11 @@ public class MeepleController2D : MonoBehaviour
     }
     void testCollision(Vector2 mLastCollisionPoint, char mLastFlip)
     {
-
+        Vector2 nearestCollision = new Vector2();
         Vector3 mCenter = gameObject.GetComponent<Collider>().bounds.center;
         Vector2 mCenterV2 = new Vector2(mCenter.x, mCenter.y);
         Vector2 fromCenterToNearestCollision = nearestCollision - mCenterV2;
         Vector2 fromCenterToNewCollision = mLastCollisionPoint - mCenterV2;
-        float nearestCollisionMagnitude = fromCenterToNearestCollision.magnitude;
 
         if (!isColliding)
         {
