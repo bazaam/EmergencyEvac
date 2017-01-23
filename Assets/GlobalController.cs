@@ -108,7 +108,6 @@ public class GlobalController
     public void AlertExit(MeepleController2D meeple)
     {
         mMeeples.Remove(meeple);
-        meeple.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
         meeple.gameObject.SetActive(false);
         ModifyRemainingMeeplesUI(-1);
         ModifySavedMeeplesUI(1);
