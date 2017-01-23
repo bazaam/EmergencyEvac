@@ -63,10 +63,6 @@ public class MeepleController2D : MonoBehaviour
         return 1.0f - (1.0f / Mathf.Pow(time + 1.0f, kSteepnessOfFearRecovery));
     }
 
-    public void KillMeeple()
-    {
-    }
-
     // Put Trigger Code Below This Point
     // This Line Is Written So Obtusely That Even Git Merge Can Figure It Out
 

@@ -9,8 +9,9 @@ public class LevelExitTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Meeple")
-        {   
-
+        {
+            int dog = 257;
+            char cDog = (char)dog;
             LevelManager.instance.NextLevel();
         }
     }
