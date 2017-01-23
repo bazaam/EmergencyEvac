@@ -24,6 +24,11 @@ public class MeepleController2D : MonoBehaviour
     private const float kSecondsOfFear = 3.0f;
     private const float kHeightOfFearMultiplier = 2.0f;
     private const float kSteepnessOfFearRecovery = 8.0f;
+
+    // Think of this as their "intelligence rate"
+    // 2.0f is intelligent, 0.3f is "subtle intelligent", and 20.0f is "fuck you I'm getting outside"
+    private const float kRotateTowardsExitRadsRate = 0.3f;
+
     private float mSpeed = 12.0f;
     private float mFearTimeRemaining = 0.0f;
     private bool mMoving = false;
@@ -38,9 +43,14 @@ public class MeepleController2D : MonoBehaviour
     {
         GlobalController.instance.RegisterMeeple(this);
     }
-	
-	// Update is run once per frame
-	void Update()
+
+    // Update is run once per frame
+    void Update()
+    {
+        //
+    }
+
+	void FixedUpdate()
     {
         if (mCollisionResult != CollisionResult.kNone)
         {
@@ -67,8 +77,14 @@ public class MeepleController2D : MonoBehaviour
             mFearTimeRemaining = Mathf.Max(mFearTimeRemaining - (Time.deltaTime / kSecondsOfFear), 0.0f);
             Vector3 translateVector = mMovementDirection * (mSpeed * Time.deltaTime * fearMagnified);
             transform.Translate(translateVector);
+
+            Vector3 myPosToExit = GlobalController.instance.GetExitCenter() - transform.position;
+            mMovementDirection = Vector3.RotateTowards(mMovementDirection, myPosToExit, Time.deltaTime * kRotateTowardsExitRadsRate, 0.0f);
+            mMovementDirection.z = 0;
+            mMovementDirection.Normalize();
         }
 
+        GlobalController.instance.TryToContainMeeple(this);
     }
             
     public void AlertMeeple(Vector3 clickPosition)
@@ -90,6 +106,7 @@ public class MeepleController2D : MonoBehaviour
 
     public void AlertExit()
     {
+        mMoving = false;
         GlobalController.instance.AlertExit(this);
     }
 
@@ -139,10 +156,10 @@ public class MeepleController2D : MonoBehaviour
                 TestCollision(result, centerV2, CollisionResult.kFlipX);
             }
 
-            if(mCollisionResult == CollisionResult.kNone)
-            {
-                mCollisionResult = CollisionResult.kReverse;
-            }
+            //if(mCollisionResult == CollisionResult.kNone)
+            //{
+            //    mCollisionResult = CollisionResult.kReverse;
+            //}
         }
     }
 

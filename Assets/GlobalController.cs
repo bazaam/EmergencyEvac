@@ -17,6 +17,13 @@ public class GlobalController
     private int mSavedMeeples = 0;
     private int mKilledMeeples = 0;
 
+    private int mMinX = int.MinValue;
+    private int mMaxX = int.MaxValue;
+    private int mMinY = int.MinValue;
+    private int mMaxY = int.MaxValue;
+
+    private Vector3 mExitCenter = new Vector3();
+
     GlobalController()
     {
         //
@@ -45,16 +52,52 @@ public class GlobalController
         }
     }
 
+    public void TryToContainMeeple(MeepleController2D meeple)
+    {
+        Vector3 meepleCenter = meeple.gameObject.GetComponent<Collider>().bounds.center;
+
+        Vector3 transform = new Vector3();
+        if (meepleCenter.x < mMinX)
+        {
+            ++transform.x;
+        }
+        if (meepleCenter.x > mMaxX)
+        {
+            --transform.x;
+        }
+        if (meepleCenter.y < mMinY)
+        {
+            ++transform.y;
+        }
+        if (meepleCenter.y > mMaxY)
+        {
+            --transform.y;
+        }
+
+        meeple.transform.Translate(transform);
+    }
+
+    public void RegisterExit(LevelExitTrigger exit)
+    {
+        mExitCenter = exit.gameObject.GetComponent<Collider>().bounds.center;
+    }
+
     public void RegisterMeeple(MeepleController2D meeple)
     {
         mMeeples.Add(meeple);
         ModifyRemainingMeeplesUI(1);
     }
 
+    public Vector3 GetExitCenter()
+    {
+        return mExitCenter;
+    }
+
     public void AlertExit(MeepleController2D meeple)
     {
         mMeeples.Remove(meeple);
         meeple.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+        meeple.gameObject.SetActive(false);
         ModifyRemainingMeeplesUI(-1);
         ModifySavedMeeplesUI(1);
 
@@ -67,6 +110,20 @@ public class GlobalController
     public void RegisterCamera(Camera mainCam)
     {
         mCamera = mainCam;
+    }
+
+    public void RegisterWall(Wall wall)
+    {
+        Bounds wallBounds = wall.gameObject.GetComponent<Collider>().bounds;
+        int wallMinX = (int)(wallBounds.center.x - wallBounds.extents.x);
+        int wallMaxX = (int)(wallBounds.center.x + wallBounds.extents.x);
+        int wallMinY = (int)(wallBounds.center.y - wallBounds.extents.y);
+        int wallMaxY = (int)(wallBounds.center.y + wallBounds.extents.y);
+
+        mMinX = Math.Max(mMinX, wallMinX);
+        mMaxX = Math.Min(mMaxX, wallMaxX);
+        mMinY = Math.Max(mMinY, wallMinY);
+        mMaxY = Math.Min(mMaxY, wallMaxY);
     }
 
     private void ModifyRemainingMeeplesUI(int offset)

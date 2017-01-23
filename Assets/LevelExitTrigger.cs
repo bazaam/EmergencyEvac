@@ -6,6 +6,11 @@ public class LevelExitTrigger : MonoBehaviour
 {
     //recognize when the meeple runs into the ending
 
+    private void Start()
+    {
+        GlobalController.instance.RegisterExit(this);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Meeple")
