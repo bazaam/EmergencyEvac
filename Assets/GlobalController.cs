@@ -24,13 +24,23 @@ public class GlobalController
 
     private Vector3 mExitCenter = new Vector3();
 
+    private bool mStarted = false;
+    private float mTimeLeft = 10.0f;
+
     GlobalController()
     {
         //
     }
 
+    public void SetLevelTime(int minutes, int seconds)
+    {
+        mTimeLeft = (float)(minutes * 60 + seconds);
+    }
+
     public void Update()
     {
+        ModifyRemainingTimeUI(Time.deltaTime);
+
         bool currentLeftClick = UnityEngine.Input.GetMouseButton(0);
         if (mLastLeftClickStateWasDown != currentLeftClick)
         {
@@ -86,6 +96,8 @@ public class GlobalController
     {
         mMeeples.Add(meeple);
         ModifyRemainingMeeplesUI(1);
+
+        mStarted = true;
     }
 
     public Vector3 GetExitCenter()
@@ -124,6 +136,23 @@ public class GlobalController
         mMaxX = Math.Min(mMaxX, wallMaxX);
         mMinY = Math.Max(mMinY, wallMinY);
         mMaxY = Math.Min(mMaxY, wallMaxY);
+    }
+
+    private void ModifyRemainingTimeUI(float deltaTime)
+    {
+        mTimeLeft -= Time.deltaTime;
+
+        double minutesF = Math.Floor((double)(mTimeLeft / 60.0f));
+        int seconds = (int)Math.Floor(mTimeLeft - (minutesF * 60.0f));
+        int minutes = (int)minutesF;
+
+        string secondsString = seconds.ToString();
+        if (secondsString.Length == 1)
+        {
+            secondsString = "0" + secondsString;
+        }
+
+        GameObject.Find("TimeRemaining").GetComponent<UnityEngine.UI.Text>().text = minutes.ToString() + ":" + secondsString;
     }
 
     private void ModifyRemainingMeeplesUI(int offset)

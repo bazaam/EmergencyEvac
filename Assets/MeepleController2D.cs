@@ -28,6 +28,7 @@ public class MeepleController2D : MonoBehaviour
     // Think of this as their "intelligence rate"
     // 2.0f is intelligent, 0.3f is "subtle intelligent", and 20.0f is "fuck you I'm getting outside"
     private const float kRotateTowardsExitRadsRate = 0.3f;
+    private const float kRotateTowardsExitRadsRateAfterReversing = 4.0f;
 
     private float mSpeed = 12.0f;
     private float mFearTimeRemaining = 0.0f;
@@ -52,6 +53,8 @@ public class MeepleController2D : MonoBehaviour
 
 	void FixedUpdate()
     {
+        float rotationRate = kRotateTowardsExitRadsRate;
+
         if (mCollisionResult != CollisionResult.kNone)
         {
             if (mCollisionResult == CollisionResult.kFlipX)
@@ -66,9 +69,9 @@ public class MeepleController2D : MonoBehaviour
             else if(mCollisionResult == CollisionResult.kReverse)
             {
                 mMovementDirection *= -1;
+                rotationRate = kRotateTowardsExitRadsRateAfterReversing;
             }
             mCollisionResult = CollisionResult.kNone;
-
         }
 
         if (mMoving)
@@ -79,7 +82,7 @@ public class MeepleController2D : MonoBehaviour
             transform.Translate(translateVector);
 
             Vector3 myPosToExit = GlobalController.instance.GetExitCenter() - transform.position;
-            mMovementDirection = Vector3.RotateTowards(mMovementDirection, myPosToExit, Time.deltaTime * kRotateTowardsExitRadsRate, 0.0f);
+            mMovementDirection = Vector3.RotateTowards(mMovementDirection, myPosToExit, Time.deltaTime * rotationRate, 0.0f);
             mMovementDirection.z = 0;
             mMovementDirection.Normalize();
         }

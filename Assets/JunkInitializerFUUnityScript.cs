@@ -11,7 +11,19 @@ public class JunkInitializerFUUnityScript : MonoBehaviour
 	void Start()
     {
         GlobalController.instance.RegisterCamera(mainCam);
-	}
+
+        string timeRemaining = GameObject.Find("TimeRemaining").GetComponent<UnityEngine.UI.Text>().text;
+        string[] timeRemainingSegs = timeRemaining.Split(':');
+
+        int minutes = int.Parse(timeRemainingSegs[0]);
+        int seconds = 0;
+        if (timeRemainingSegs.Length > 0)
+        {
+            seconds = int.Parse(timeRemainingSegs[1]);
+        }
+
+        GlobalController.instance.SetLevelTime(minutes, seconds);
+    }
 	
 
 	// Update is called once per frame
