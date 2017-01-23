@@ -44,15 +44,16 @@ public class MeepleController2D : MonoBehaviour
             if (currentFlip == 'x')
             {
                 mMovementDirection.x *= -1;
-                
+                isColliding = false;
+
+
             }
             else if (currentFlip == 'y')
             {
                 mMovementDirection.y *= -1;
-                
+                isColliding = false;
             }
 
-            isColliding = false;
         }
 
         if (mMoving)
@@ -111,6 +112,9 @@ public class MeepleController2D : MonoBehaviour
             Vector2 result = new Vector2();
             Vector2 colliderS1 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.center.y - inCollider.bounds.extents.y);
             Vector2 colliderS2 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.extents.y - inCollider.bounds.extents.x);
+            Vector2 colliderS3 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.extents.y + inCollider.bounds.extents.x);
+            Vector2 colliderS4 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.extents.y + inCollider.bounds.extents.x);
+
             Vector2 colliderP1 = mCenterV2 + (mDirectionV2 * 50.0f);
             Vector2 colliderP2 = mCenterV2 + (mDirectionV2 * -50.0f);
 
@@ -120,32 +124,19 @@ public class MeepleController2D : MonoBehaviour
                 testCollision(result, 'y');
             }
 
-            colliderS1 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.center.y - inCollider.bounds.extents.y);
-            colliderS2 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.extents.y + inCollider.bounds.extents.x);
-            colliderP1 = mCenterV2 + (mDirectionV2 * 50.0f);
-            colliderP2 = mCenterV2 + (mDirectionV2 * -50.0f);
-
-            if (Utility.LineSegmentsIntersectPos(ref result, colliderS1, colliderS2, colliderP1, colliderP2))
+            if (Utility.LineSegmentsIntersectPos(ref result, colliderS1, colliderS3, colliderP1, colliderP2))
             {
                 testCollision(result, 'x');
             }
 
-            colliderS1 = new Vector2(inCollider.bounds.center.x - inCollider.bounds.extents.x, inCollider.bounds.center.y + inCollider.bounds.extents.y);
-            colliderS2 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.extents.y + inCollider.bounds.extents.x);
-            colliderP1 = mCenterV2 + (mDirectionV2 * 50.0f);
-            colliderP2 = mCenterV2 + (mDirectionV2 * -50.0f);
 
-            if (Utility.LineSegmentsIntersectPos(ref result, colliderS1, colliderS2, colliderP1, colliderP2))
+            if (Utility.LineSegmentsIntersectPos(ref result, colliderS3, colliderS4, colliderP1, colliderP2))
             {
                 testCollision(result, 'y');
             }
 
-            colliderS1 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.center.y + inCollider.bounds.extents.y);
-            colliderS2 = new Vector2(inCollider.bounds.center.x + inCollider.bounds.extents.x, inCollider.bounds.extents.y - inCollider.bounds.extents.x);
-            colliderP1 = mCenterV2 + (mDirectionV2 * 50.0f);
-            colliderP2 = mCenterV2 + (mDirectionV2 * -50.0f);
 
-            if (Utility.LineSegmentsIntersectPos(ref result, colliderS1, colliderS2, colliderP1, colliderP2))
+            if (Utility.LineSegmentsIntersectPos(ref result, colliderS2, colliderS4, colliderP1, colliderP2))
             {
                 testCollision(result, 'x');
             }
@@ -165,7 +156,7 @@ public class MeepleController2D : MonoBehaviour
 
         if (!isColliding)
         {
-            mLastCollisionPoint = nearestCollision;
+            nearestCollision = mLastCollisionPoint;
         }
         else if (fromCenterToNewCollision.magnitude < fromCenterToNearestCollision.magnitude)
         {
