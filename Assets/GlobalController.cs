@@ -13,6 +13,10 @@ public class GlobalController
 
     private bool mLastLeftClickStateWasDown = false;
 
+    private int mExistingMeeples = 0;
+    private int mSavedMeeples = 0;
+    private int mKilledMeeples = 0;
+
     GlobalController()
     {
         //
@@ -44,6 +48,20 @@ public class GlobalController
     public void RegisterMeeple(MeepleController2D meeple)
     {
         mMeeples.Add(meeple);
+        ModifyRemainingMeeplesUI(1);
+    }
+
+    public void AlertExit(MeepleController2D meeple)
+    {
+        mMeeples.Remove(meeple);
+        meeple.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+        ModifyRemainingMeeplesUI(-1);
+        ModifySavedMeeplesUI(1);
+
+        if (mExistingMeeples == 0)
+        {
+            LevelManager.instance.NextLevel();
+        }
     }
 
     public void RegisterCamera(Camera mainCam)
@@ -51,4 +69,16 @@ public class GlobalController
         mCamera = mainCam;
     }
 
+    private void ModifyRemainingMeeplesUI(int offset)
+    {
+        mExistingMeeples += offset;
+
+        GameObject.Find("MeepleRemainingNum").GetComponent<UnityEngine.UI.Text>().text = mExistingMeeples.ToString();
+    }
+    private void ModifySavedMeeplesUI(int offset)
+    {
+        mSavedMeeples += offset;
+
+        GameObject.Find("MeepleSavedNum").GetComponent<UnityEngine.UI.Text>().text = mSavedMeeples.ToString();
+    }
 }

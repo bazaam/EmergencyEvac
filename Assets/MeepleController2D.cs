@@ -58,6 +58,11 @@ public class MeepleController2D : MonoBehaviour
         }
     }
 
+    public void AlertExit()
+    {
+        GlobalController.instance.AlertExit(this);
+    }
+
     private float FearEasingRatio(float time)
     {
         return 1.0f - (1.0f / Mathf.Pow(time + 1.0f, kSteepnessOfFearRecovery));

@@ -10,9 +10,8 @@ public class LevelExitTrigger : MonoBehaviour
     {
         if (other.tag == "Meeple")
         {
-            int dog = 257;
-            char cDog = (char)dog;
-            LevelManager.instance.NextLevel();
+            MeepleController2D meeple = other.gameObject.GetComponent<MeepleController2D>();
+            meeple.AlertExit();
         }
     }
     //when the meeples run into the ending they are "saved" and removed. 
