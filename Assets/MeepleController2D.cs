@@ -19,8 +19,8 @@ public class MeepleController2D : MonoBehaviour
 
     // within "10" of the unit, it starts to move
 
-    private const float kMagnitudeToStartFear = 20.0f;
-    private const float kMagnitudeToHaveAFearJump = 10.0f;
+    private const float kMagnitudeToStartFear = 0.5f;
+    private const float kMagnitudeToHaveAFearJump = 0.25f;
     private const float kSecondsOfFear = 3.0f;
     private const float kHeightOfFearMultiplier = 2.0f;
     private const float kSteepnessOfFearRecovery = 8.0f;
@@ -96,14 +96,18 @@ public class MeepleController2D : MonoBehaviour
         clickToMyPos.z = 0;
         float magnitude = clickToMyPos.magnitude;
 
-        if(magnitude < kMagnitudeToStartFear)
+        float magnitudeToStartFear = kMagnitudeToStartFear * GlobalController.instance.GetWidestPartOfLevel();
+
+        if(magnitude < magnitudeToStartFear)
         {
             clickToMyPos.Normalize();
 
             mMoving = true;
             mMovementDirection = clickToMyPos; // magnitude / kMagnitudeToStartFear
 
-            mFearTimeRemaining = magnitude < kMagnitudeToHaveAFearJump ? 0.2f : 0.0f;
+            float magnitudeToFearJump = kMagnitudeToHaveAFearJump * GlobalController.instance.GetWidestPartOfLevel();
+
+            mFearTimeRemaining = magnitude < magnitudeToFearJump ? 0.2f : 0.0f;
         }
     }
 

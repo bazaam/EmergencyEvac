@@ -17,10 +17,12 @@ public class GlobalController
     private int mSavedMeeples = 0;
     private int mKilledMeeples = 0;
 
-    private int mMinX = int.MinValue;
-    private int mMaxX = int.MaxValue;
-    private int mMinY = int.MinValue;
-    private int mMaxY = int.MaxValue;
+    private float mMinX = float.MaxValue;
+    private float mMaxX = float.MinValue;
+    private float mMinY = float.MaxValue;
+    private float mMaxY = float.MinValue;
+
+    private float mWidestPartOfLevel = 10.0f;
 
     private Vector3 mExitCenter = new Vector3();
 
@@ -69,19 +71,19 @@ public class GlobalController
         Vector3 transform = new Vector3();
         if (meepleCenter.x < mMinX)
         {
-            ++transform.x;
+            transform.x += 0.5f;
         }
         if (meepleCenter.x > mMaxX)
         {
-            --transform.x;
+            transform.x -= 0.5f;
         }
         if (meepleCenter.y < mMinY)
         {
-            ++transform.y;
+            transform.y += 0.5f;
         }
         if (meepleCenter.y > mMaxY)
         {
-            --transform.y;
+            transform.y -= 0.5f;
         }
 
         meeple.transform.Translate(transform);
@@ -105,6 +107,11 @@ public class GlobalController
         return mExitCenter;
     }
 
+    public float GetWidestPartOfLevel()
+    {
+        return mWidestPartOfLevel;
+    }
+
     public void AlertExit(MeepleController2D meeple)
     {
         mMeeples.Remove(meeple);
@@ -126,15 +133,17 @@ public class GlobalController
     public void RegisterWall(Wall wall)
     {
         Bounds wallBounds = wall.gameObject.GetComponent<Collider>().bounds;
-        int wallMinX = (int)(wallBounds.center.x - wallBounds.extents.x);
-        int wallMaxX = (int)(wallBounds.center.x + wallBounds.extents.x);
-        int wallMinY = (int)(wallBounds.center.y - wallBounds.extents.y);
-        int wallMaxY = (int)(wallBounds.center.y + wallBounds.extents.y);
+        float wallMinX = (wallBounds.center.x - wallBounds.extents.x + 1.0f);
+        float wallMaxX = (wallBounds.center.x + wallBounds.extents.x - 1.0f);
+        float wallMinY = (wallBounds.center.y - wallBounds.extents.y + 1.0f);
+        float wallMaxY = (wallBounds.center.y + wallBounds.extents.y - 1.0f);
 
-        mMinX = Math.Max(mMinX, wallMinX);
-        mMaxX = Math.Min(mMaxX, wallMaxX);
-        mMinY = Math.Max(mMinY, wallMinY);
-        mMaxY = Math.Min(mMaxY, wallMaxY);
+        mMinX = Math.Min(mMinX, wallMinX);
+        mMaxX = Math.Max(mMaxX, wallMaxX);
+        mMinY = Math.Min(mMinY, wallMinY);
+        mMaxY = Math.Max(mMaxY, wallMaxY);
+
+        mWidestPartOfLevel = Math.Max((mMaxX - mMinX), (mMaxY - mMinY));
     }
 
     private void ModifyRemainingTimeUI(float deltaTime)
