@@ -8,6 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Town.unity
   - enabled: 1
+    path: Assets/Scenes/Lurn2Turn.unity
+  - enabled: 1
     path: Assets/Scenes/StevensScene.unity
   - enabled: 1
     path: Assets/Scenes/ElevatorBay.unity
