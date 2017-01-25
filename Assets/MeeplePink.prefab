@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4096876934998220}
   - component: {fileID: 212139735507186592}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 54457544042765980}
   - component: {fileID: 65680138349044690}
   - component: {fileID: 114680267343338488}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MeeplePink
   m_TagString: Meeple
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1679526354481066}
   m_LocalRotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.46320152, y: -1.6246948, z: 0}
+  m_LocalPosition: {x: -0.8463173, y: 3.163147, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4096876934998220}
@@ -106,7 +106,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2, y: 2, z: 2}
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114680267343338488
 MonoBehaviour:
   m_ObjectHideFlags: 1

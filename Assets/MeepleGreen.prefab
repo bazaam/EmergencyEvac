@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 54676379317503882}
   - component: {fileID: 65485590581311042}
   - component: {fileID: 114963367969420556}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MeepleGreen
   m_TagString: Meeple
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4853146852225392}
   - component: {fileID: 212628957614614746}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1036982812266426}
   m_LocalRotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.58, y: 5.98, z: 0}
+  m_LocalPosition: {x: -2.5197792, y: 6.911701, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4853146852225392}
