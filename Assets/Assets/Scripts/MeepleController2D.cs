@@ -19,8 +19,8 @@ public class MeepleController2D : MonoBehaviour
 
     // within "10" of the unit, it starts to move
 
-    private const float kMagnitudeToStartFear = 0.5f;
-    private const float kMagnitudeToHaveAFearJump = 0.25f;
+    private const float kMagnitudeToStartFear = 0.3f;
+    private const float kMagnitudeToHaveAFearJump = 0.1f;
     private const float kSecondsOfFear = 3.0f;
     private const float kHeightOfFearMultiplier = 2.0f;
     private const float kSteepnessOfFearRecovery = 8.0f;

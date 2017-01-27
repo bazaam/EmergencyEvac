@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23528407524039998}
   - component: {fileID: 65115874746024430}
   - component: {fileID: 114443018354347886}
+  - component: {fileID: 114829236470093134}
   m_Layer: 0
   m_Name: JunkInitializerFloor
   m_TagString: Untagged
@@ -186,6 +187,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCam: {fileID: 20130871004082520}
+--- !u!114 &114829236470093134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1469857425935980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a1fc5c3cd03ecc4e8927a02e3dc2bf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseDownParticle: {fileID: 1666815995991818, guid: ded3bc4842b79a6478eb17295e4e1de8,
+    type: 2}
+  mCamera: {fileID: 20130871004082520}
 --- !u!124 &124768484564289672
 Behaviour:
   m_ObjectHideFlags: 1

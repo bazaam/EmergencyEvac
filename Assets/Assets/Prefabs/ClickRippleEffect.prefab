@@ -50,7 +50,7 @@ ParticleSystem:
   serializedVersion: 5
   lengthInSec: 5
   speed: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   autoRandomSeed: 1
@@ -140,7 +140,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     startSpeed:
-      scalar: 2
+      scalar: 4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -661,10 +661,10 @@ ParticleSystem:
     cntmax2: 500
     cntmax3: 30
     time0: 0
-    time1: 0.5
-    time2: 1
+    time1: 0.3
+    time2: 0.6
     time3: 0
-    m_BurstCount: 3
+    m_BurstCount: 2
   SizeModule:
     enabled: 1
     curve:
